@@ -28,6 +28,7 @@ class Login extends CI_Controller {
 		if ($q->num_rows() > 0) {
 		$d = $q->row();	
 		 $array = array(
+			 'id' => $d->id,
 			 'nip' => $d->nip,
 			 'username' => $username,
 			 'jabatan_id' => $d->jabatan_id,

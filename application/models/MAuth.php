@@ -11,7 +11,7 @@ class MAuth extends CI_Model {
     
 	public function login($username="",$password="")
 	{
-        $this->db->select('nip,nama,k.email,k.img,tbl_jabatan_id as jabatan_id, nma_jabatan, leader, jabatan_grp_id as jabatan_grup');
+        $this->db->select('k.id,nip,nama,k.email,k.img,tbl_jabatan_id as jabatan_id, nma_jabatan, leader, jabatan_grp_id as jabatan_grup');
         $this->db->where('u.username', $username);
         $this->db->where('u.password', md5($password));
         $this->db->join('tbl_karyawan k', 'k.users_id = u.id', 'inner');

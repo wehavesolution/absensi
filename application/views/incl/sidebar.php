@@ -55,15 +55,15 @@
                 <li class="nav-item">
                   <p class="navbar-vertical-label">Halaman Pribadi</p>
 
-                  <a class="nav-link" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                  <a class="nav-link" href="<?=site_url('Main/dashboard')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="cast"></span></span><span class="nav-link-text">Dashboard</span></div>
                   </a>
 
-                  <a class="nav-link" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                  <a class="nav-link" href="<?=site_url('Main/absensi_pribadi')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="columns"></span></span><span class="nav-link-text">Absensi Pribadi</span></div>
                   </a>
 
-                  <a class="nav-link" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                  <a class="nav-link" href="<?=site_url('Main/pengajuan_pribadi')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Pengajuan Pribadi</span></div>
                   </a>
 

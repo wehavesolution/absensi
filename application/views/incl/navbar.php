@@ -12,13 +12,17 @@
               <!-- <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input class="form-control form-control-sm search-input search min-h-auto" type="search" placeholder="Search..." aria-label="Search"> <span class="fas fa-search search-box-icon"></span></form> -->
             <!-- </div> -->
             <ul class="navbar-nav navbar-nav-icons flex-row">
-            <li class="nav-item dropdown"><a class="nav-link" style="background: antiquewhite;
+            <li class="nav-item dropdown"><a class="nav-link" href="<?=site_url('Notif')?>" style="background: antiquewhite;
     border-radius: 26px;
-    padding: 10px 14px;" id="navbarDropdownNotification" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-700" data-feather="bell" style="height:20px;width:20px;"></span> <span style="font-size: 14px;">Notifikasi</span></a></li>
+    padding: 10px 14px;" id="navbarDropdownNotification"  aria-expanded="false"><span class="text-700" data-feather="bell" style="height:20px;width:20px;"></span> <span style="font-size: 14px;">Notifikasi <span id="count_notif"><?=$this->MNotif->countNotifToNotRead($this->session->userdata('id'))?></span></span></a></li>
 
             </ul>
             <ul class="navbar-nav navbar-nav-icons ms-auto flex-row">
-              <li class="nav-item dropdown"><a class="nav-link notification-indicator notification-indicator-primary" id="navbarDropdownSettings" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-700" data-feather="settings" style="height:20px;width:20px;"></span></a></li>
+              <li class="d-flex align-items-center gap-2">
+                <button class="btn btn-sm btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#modal_absensi" onclick=" bukaKamera();">Form Absensi</button>
+                <button class="btn btn-sm btn-info" type="button" data-bs-toggle="modal" data-bs-target="#modal_pengajuan">Form Pengajuan</button>
+              </li>
+              <!-- <li class="nav-item dropdown"><a class="nav-link notification-indicator notification-indicator-primary" id="navbarDropdownSettings" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-700" data-feather="settings" style="height:20px;width:20px;"></span></a></li>
               <li class="nav-item dropdown"><a class="nav-link" id="navbarDropdownNindeDots" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="2" cy="2" r="2" fill="#6C6E71"></circle>
                     <circle cx="2" cy="8" r="2" fill="#6C6E71"></circle>
@@ -80,7 +84,7 @@
                     </div>
                   </div>
                 </div>
-              </li>
+              </li> -->
               <li class="nav-item dropdown"><a class="nav-link lh-1 px-0 ms-5" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <div class="avatar avatar-l"><img class="rounded-circle" src="<?= base_url();?>template/assets/img/team/<?=$this->session->userdata("img")?>" alt=""></div>
                 </a>

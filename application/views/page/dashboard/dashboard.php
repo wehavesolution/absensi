@@ -12,6 +12,7 @@ width: 24px;
 height: 24px;
 }
 </style>
+<div class="d-flex flex-center content-min-h">
 <div class="pb-5">
             <div class="row g-5">
               <div class="col-12 col-xxl-6">
@@ -97,6 +98,28 @@ height: 24px;
                 </div>
 
               
+              </div>
+              <div class="row mt-4">
+                  <div class="col-12 col-md-12">
+                    <div class="card border border-200 shadow-none h-100">
+                      <div class="card-body">
+                        <table class="table table-striped" id="table">
+                          <thead>
+                            <tr>
+                              <td>No</td>
+                              <td>Tanggal</td>
+                              <td>Nama</td>
+                              <td>Masuk</td>
+                              <td>Pulang</td>
+                              <td>Status</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
               </div>
               <div class="col-12 col-xxl-6">
                 <div class="row g-3">
@@ -207,3 +230,4 @@ height: 24px;
               </div>
             </div>
           </div>
+</div>

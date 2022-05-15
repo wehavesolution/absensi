@@ -12,14 +12,65 @@ class Main extends CI_Controller {
 			$this->session->set_flashdata('false', 'Maaf anda tidak dapat mengakses halaman tersebut, silahkan login untuk melanjutkan!');
 			redirect('/');
 		}
+
+		$this->load->model('MAbsensi','ma');
+		$this->load->model('MPengajuan','mp');
+		$this->karyawan_id = $this->session->userdata('id');
 	}
-	
 
 	public function dashboard()
 	{
 		$data = [
+			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
 			'title' => "ERM :: Dashboard",
-			'page' => "dashboard/dashboard"
+			'page' => "dashboard/dashboard",
+			'js' => [
+				'assets/js/dashboard.js'
+			]
+		];
+		$this->load->view('_main',$data);
+	}
+
+	public function absensi_pribadi()
+	{
+		$data = [
+			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
+			'title' => "ERM :: Absensi Pribadi",
+			'page' => "absensi/pribadi",
+			'js' => [
+				'assets/js/absensi_pribadi.js'
+			]
+		];
+		$this->load->view('_main',$data);
+	}
+
+	public function pengajuan_pribadi()
+	{
+		$data = [
+			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
+			'title' => "ERM :: Pengajuan Personal",
+			'page' => "pengajuan/pribadi",
+			'js' => [
+				'assets/js/pengajuan_pribadi.js'
+			]
+		];
+		$this->load->view('_main',$data);
+	}
+
+	public function detail_pengajuan()
+	{
+		$id = $this->input->get('id');
+
+
+		$data = [
+			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
+			'title' => "ERM :: Detail Pengajuan",
+			'page' => "pengajuan/detail",
+			'data' => $this->mp->getIDPengajuan($id),
+			'log_data' => $this->mp->getLogPengajuanID($id),
+			'js' => [
+				'assets/js/pengajuan_detail.js'
+			]
 		];
 		$this->load->view('_main',$data);
 	}
