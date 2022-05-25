@@ -429,6 +429,91 @@ class MAbsensi extends CI_Model {
     }
 
 
+    public function dt_absensi_karyawan()
+    {
+         // Definisi
+         $condition = [];
+         $data = [];
+
+        //  Definisi inputan filter
+        $i_karyawan = $this->input->post('i_karyawan');
+        $i_jabatan = $this->input->post('i_jabatan');
+        $i_status_absensi = $this->input->post('i_status_absensi');
+        $i_date = $this->input->post('i_ctddate');
+        
+         $CI = &get_instance();
+         $CI->load->model('DataTable', 'dt');
+         // Set table name
+         $CI->dt->table = 'tbl_absensi as ta';
+         // Set orderable column fields
+         $CI->dt->column_order = [null,'tanggal','nama','jam_masuk','jam_keluar','status_absensi','keterangan'];
+         // Set searchable column fields
+         $CI->dt->column_search = ['tanggal','nama','jam_masuk','jam_keluar','keterangan'];
+         // Set select column fields
+         $CI->dt->select = 'k.nama,ta.id, tanggal, jam_masuk, jam_keluar, ta.status_absensi, ka.keterangan';
+         // Set default order
+         $CI->dt->order = ['ta.id' => 'desc'];
+
+         $con = ['join','tbl_karyawan k','k.id = ta.karyawan_id','inner'];
+         array_push($condition,$con);
+
+         $con = ['join','tbl_ket_absensi ka','ka.kode_ket = ta.kode_ket','inner'];
+         array_push($condition,$con);
+
+
+        //  Filter berdasarkan nama karyawan
+        if ($i_karyawan) {
+            $con = ['where','k.id',$i_karyawan];
+            array_push($condition,$con);
+        }
+
+        //  Filter berdasarkan jabatan
+        if ($i_jabatan) {
+            $con = ['where','k.tbl_jabatan_id',$i_jabatan];
+            array_push($condition,$con);
+        }
+
+        //  Filter berdasarkan status
+        if ($i_status_absensi) {
+            $con = ['where','ta.status_absensi',$i_status_absensi];
+            array_push($condition,$con);
+        }
+
+        //  Filter berdasarkan tanggal
+        if ($i_date) {
+            $con = ['where','ta.ctddate',$i_date];
+            array_push($condition,$con);
+        }
+
+         // Fetch member's records
+         $dataTabel = $this->dt->getRows(@$_POST, $condition);
+        
+         $i = @$this->input->post('start');
+         foreach ($dataTabel as $dt) {
+             $i++;
+             $data[] = array(
+                 $i,
+                 $dt->tanggal,
+                 $dt->nama,
+                 $dt->jam_masuk,
+                 $dt->jam_keluar,
+                //  $this->setStatus($dt->status_absensi)
+                 $dt->keterangan
+             );
+         }
+ 
+         $output = array(
+             "draw" => @$this->input->post('draw'),
+             "recordsTotal" => $this->dt->countAll($condition),
+             "recordsFiltered" => $this->dt->countFiltered(@$this->input->post(), $condition),
+             "data" => $data,
+         );
+ 
+         // Output to JSON format
+         return json_encode($output);
+    }
+
+
     
 }
 

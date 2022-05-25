@@ -86,4 +86,18 @@ class Absensi extends CI_Controller {
 
         return $filename;
     }
+
+    // Datatabel Absensi Karyawan
+	public function dt_absensi_karyawan()
+	{
+		$karyawan_id = $this->session->userdata('id');
+        echo $this->ma->dt_absensi_karyawan($karyawan_id);
+	}
+
+    // Datatabel Absensi Anggota
+	public function dt_absensi_anggota()
+	{
+		$karyawan_id = $this->session->userdata('id');
+        echo $this->ma->dt_absensi_anggota($karyawan_id);
+	}
 }

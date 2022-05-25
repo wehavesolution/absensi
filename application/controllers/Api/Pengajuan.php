@@ -106,6 +106,11 @@ class Pengajuan extends CI_Controller {
         echo $this->mp->dt_pengajuan_personal($karyawan_id);
     }
 
+    public function dt_pengajuan_karyawan()
+    {
+        echo $this->mp->dt_pengajuan_karyawan();
+    }
+
     public function tindaklanjutiPengajuan()
     {
         $rsp = [

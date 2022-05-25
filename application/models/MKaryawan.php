@@ -26,7 +26,9 @@ class MKaryawan extends CI_Model {
     {
         $this->db->select('k.*,j.parent_id');
         $this->db->join('tbl_jabatan j', 'j.id = k.tbl_jabatan_id', 'inner');
-        $this->db->where('k.id', $karyawan_id);
+        if ($karyawan_id) {
+            $this->db->where('k.id', $karyawan_id);
+        }
         $q = $this->db->get($this->t.' k');
         return $q;
     }

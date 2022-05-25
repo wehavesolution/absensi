@@ -72,9 +72,6 @@
             
         </div>
         <div class="row mt-4">
-            <!-- <div class="d-flex  justify-content-end mb-4">
-                <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Absen</button>
-            </div> -->
             <div class="col-12 col-md-12">
                 <div class="card border border-200 shadow-none h-100">
                     <div class="card-body">

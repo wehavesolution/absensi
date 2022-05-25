@@ -1,20 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MKetAbsensi extends CI_Model {
+class MJabatan extends CI_Model {
 
-    private $t = "tbl_ket_absensi";
+    private $t = "tbl_jabatan";
     public function __construct()
     {
         parent::__construct();
         //Do your magic here
     }
 
-    public function getKetAbsensi($kode_ket="")
+    public function getJabatan($jabatan_grp_id="")
     {
         $this->db->select('*');
-        if ($kode_ket) {
-            $q = $this->db->get_where($this->t,['kode_ket' => $kode_ket]);
+        if ($jabatan_grp_id) {
+            $q = $this->db->get_where($this->t,['jabatan_grp_id' => $jabatan_grp_id]);
             if ($q->num_rows() > 0) {
                 return $q;
             }

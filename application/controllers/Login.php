@@ -11,7 +11,7 @@ class Login extends CI_Controller {
 		$this->load->model('MAuth','ma');
 		
 	}
-
+	
 	public function index()
 	{
 		$data = [

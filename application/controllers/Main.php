@@ -74,4 +74,40 @@ class Main extends CI_Controller {
 		];
 		$this->load->view('_main',$data);
 	}
+
+	// Karyawan or Angota
+	public function absensi_karyawan()
+	{
+		$this->load->model('MJabatan','mj');
+		
+		$data = [
+			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
+			'title' => "ERM :: Absensi Karyawan",
+			'page' => "absensi/karyawan",
+			'filter' => [
+				'f_karyawan' => $this->aut_mk->getKaryawan()->result(),
+				'f_jabatan' => $this->mj->getJabatan()->result()
+			],
+			'js' => [
+				'assets/js/absensi_karyawan.js'
+			]
+		];
+		$this->load->view('_main',$data);
+	}
+
+	public function pengajuan_karyawan()
+	{
+		$data = [
+			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
+			'title' => "ERM :: Pengajuan Karyawan",
+			'page' => "pengajuan/karyawan",
+			'filter' => [
+				'f_karyawan' => $this->aut_mk->getKaryawan()->result(),
+			],
+			'js' => [
+				'assets/js/pengajuan_karyawan.js'
+			]
+		];
+		$this->load->view('_main',$data);
+	}
 }

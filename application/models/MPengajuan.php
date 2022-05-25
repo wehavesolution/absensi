@@ -94,6 +94,90 @@ class MPengajuan extends CI_Model {
          return json_encode($output);
     }
 
+    public function dt_pengajuan_karyawan()
+    {
+         // Definisi
+         $condition = [];
+         $data = [];
+
+        //  Definisi inputan filter
+        $i_karyawan = $this->input->post('i_karyawan');
+        $i_status = $this->input->post('i_status');
+        $i_diterima = $this->input->post('i_diterima');
+        $i_date = $this->input->post('i_date');
+ 
+         $CI = &get_instance();
+         $CI->load->model('DataTable', 'dt');
+         // Set table name
+         $CI->dt->table = 'tbl_pengajuan as ta';
+         // Set orderable column fields
+         $CI->dt->column_order = [null,'ctddate','ctdtime','nama','keterangan','status_pengajuan_str','diterima'];
+         // Set searchable column fields
+         $CI->dt->column_search = ['ctddate','ctdtime','nama','keterangan','status_pengajuan_str','diterima'];
+         // Set select column fields
+         $CI->dt->select = 'ta.*,k.nama,ka.keterangan as status_pengajuan_str';
+         // Set default order
+         $CI->dt->order = ['ta.id' => 'desc'];
+
+         $con = ['join','tbl_karyawan k','k.id = ta.karyawan_id','inner'];
+         array_push($condition,$con);
+
+         $con = ['join','tbl_ket_absensi ka','ka.kode_ket = ta.status_pengajuan','inner'];
+         array_push($condition,$con);
+
+        //  Filter berdasarkan nama karyawan
+        if ($i_karyawan) {
+            $con = ['where','k.id',$i_karyawan];
+            array_push($condition,$con);
+        }
+
+        //  Filter berdasarkan status
+        if ($i_status) {
+            $con = ['where','ta.status_pengajuan',$i_status];
+            array_push($condition,$con);
+        }
+
+        //  Filter berdasarkan pengajuan diterima/tidak
+        if ($i_diterima) {
+            $con = ['where','ta.diterima',$i_diterima];
+            array_push($condition,$con);
+        }
+
+        //  Filter berdasarkan tanggal
+        if ($i_date) {
+            $con = ['where','ta.ctddate',$i_date];
+            array_push($condition,$con);
+        }
+
+         // Fetch member's records
+         $dataTabel = $this->dt->getRows(@$_POST, $condition);
+ 
+         $i = @$this->input->post('start');
+         foreach ($dataTabel as $dt) {
+             $i++;
+             $data[] = array(
+                 $i,
+                 $dt->ctddate,
+                 $dt->ctdtime,
+                 $dt->nama,
+                 $dt->keterangan,
+                 $dt->status_pengajuan_str,
+                 $this->setTerimaPengajuan($dt->diterima),
+                 '<a href="'.site_url('Main/detail_pengajuan?id='.$dt->id).'" clsss="btn btn-sm btn-primary">Detail</a>'
+             );
+         }
+ 
+         $output = array(
+             "draw" => @$this->input->post('draw'),
+             "recordsTotal" => $this->dt->countAll($condition),
+             "recordsFiltered" => $this->dt->countFiltered(@$this->input->post(), $condition),
+             "data" => $data,
+         );
+ 
+         // Output to JSON format
+         return json_encode($output);
+    }
+
     public function setTerimaPengajuan($terima='')
     {
         if ($terima==0) {
