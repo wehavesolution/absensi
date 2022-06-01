@@ -21,54 +21,54 @@
                 <h5 class="text-700 fw-semi-bold">Pribadi</h5>
             </div>
             <div class="row">
-                <div class="col-md-3">
+                  <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <div class="icon">
-                            <span data-feather="clipboard"></span>
-                        </div>
-                        <div class="ms-3">
-                            <h4 class="mb-0">57</h4>
-                            <p class="text-800 fs--1 mb-0">Total Abensi</p>
-                        </div>
+                      <div class="icon">
+                        <span data-feather="clipboard"></span>
+                      </div>
+                      <div class="ms-3">
+                        <h4 class="mb-0"><?=$data['total'];?></h4>
+                        <p class="text-800 fs--1 mb-0">Total Abensi</p>
+                      </div>
                     </div>
-                </div>
-                <div class="col-md-3">
+                  </div>
+                  <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <div class="icon">
-                            <span data-feather="user-check"></span> 
-                        </div> 
-                        <div class="ms-3">
-                            <h4 class="mb-0">5</h4>
-                            <p class="text-800 fs--1 mb-0">Total Tepat Waktu</p>
-                        </div>
+                    <div class="icon">
+                      <span data-feather="user-check"></span> 
+                    </div> 
+                      <div class="ms-3">
+                        <h4 class="mb-0"><?=$data['tepat_waktu'];?></h4>
+                        <p class="text-800 fs--1 mb-0">Total Tepat Waktu</p>
+                      </div>
                     </div>
-                </div>
-                <div class="col-md-3">
+                  </div>
+                  <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <div class="icon">
-                            <span data-feather="user-x"></span>  
-                        </div>
-                        <div class="ms-3">
-                            <h4 class="mb-0">15</h4>
-                            <p class="text-800 fs--1 mb-0">Total Telat</p>
-                        </div>
+                    <div class="icon">
+                      <span data-feather="user-x"></span>  
                     </div>
-                </div>
-                
-                <div class="col-md-3">
+                      <div class="ms-3">
+                        <h4 class="mb-0"><?=$data['telat'];?></h4>
+                        <p class="text-800 fs--1 mb-0">Total Telat</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <div class="icon">
-                            <span data-feather="user-minus"></span> 
-                        </div> 
-                        <div class="ms-3">
-                            <h4 class="mb-0">15</h4>
-                            <p class="text-800 fs--1 mb-0">Total Cuti</p>
-                        </div>
+                    <div class="icon">
+                      <span data-feather="user-minus"></span> 
+                    </div> 
+                      <div class="ms-3">
+                        <h4 class="mb-0"><?=$data['cuti'];?></h4>
+                        <p class="text-800 fs--1 mb-0">Total Cuti</p>
+                      </div>
                     </div>
-                </div>
-                
+                  </div>
+
             </div>
-            <hr class="bg-200 mb-6 mt-4">
+            <hr class="bg-200 mb-2 mt-2">
             
         </div>
         <div class="row mt-4">

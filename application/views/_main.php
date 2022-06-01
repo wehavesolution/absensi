@@ -31,7 +31,7 @@
               <h1 id="jam_realtime">00:00</h1>
           </div>
           <div class="text-center mt-2">
-            <p class="text-700 lh-lg mb-0">Hi <b>Sahrul Rizal</b>, </br> <span id="text_response"><?=$info_absensi[2]?></span></p>
+            <p class="text-700 lh-lg mb-0">Hi <b><?=$this->session->userdata('nama')?></b>, </br> <span id="text_response"><?=$info_absensi[2]?></span></p>
           </div>
 
           <div class="d-flex justify-content-center mt-4" id="form_absensi">

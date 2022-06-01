@@ -33,6 +33,20 @@ class MKaryawan extends CI_Model {
         return $q;
     }
 
+    public function getMyAnggota($karyawan_id='')
+    {
+        $parent_id = $this->getKaryawan($karyawan_id);
+        if ($parent_id->num_rows() > 0) {
+            $parent_id = $parent_id->row()->tbl_jabatan_id;
+        }
+
+        $this->db->select('k.*,j.parent_id');
+        $this->db->join('tbl_jabatan j', 'j.id = k.tbl_jabatan_id', 'inner');
+        $this->db->where('j.parent_id', $parent_id);
+        $q = $this->db->get($this->t.' k');
+        return $q;
+    }
+
     public function getLeaderKaryawan($karyawan_id='')
     {
         $first_q = $this->getKaryawan($karyawan_id);

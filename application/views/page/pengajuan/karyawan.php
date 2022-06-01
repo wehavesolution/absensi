@@ -1,7 +1,7 @@
 
-    <div class="row">
+    <div class="owah">
         <div class="row mt-4">
-            <div class="col-md-12">
+            <div class="col-md-12 mb-4">
                 <div class="card">
                         <div class="card-body">
                             <form action="javascript:void(0);" id="form_filter" method="post">

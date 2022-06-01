@@ -41,7 +41,7 @@ class Login extends CI_Controller {
 		 $this->session->set_userdata($array);
 		
 		 $this->session->set_flashdata('true', 'Berhasil login ke system');
-		 redirect('Main/Dashboard');
+		 redirect('Main/Dashboard_personal');
 		}else{
 		 $this->session->set_flashdata('false', 'Gagal login, harap periksa kembali username dan password yang anda masukan');
 		}

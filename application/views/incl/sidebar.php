@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light navbar-vertical navbar-vibrant navbar-expand-lg">
+<nav class="navbar navbar-light navbar-vertical navbar-vibrant navbar-expand-lg" style="height: 100%;">
           <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
             <div class="navbar-vertical-content scrollbar">
             <div class="text-center pt-4 pb-3" >
@@ -55,8 +55,8 @@
                 <li class="nav-item">
                   <p class="navbar-vertical-label">Halaman Pribadi</p>
 
-                  <a class="nav-link" href="<?=site_url('Main/dashboard')?>" role="button" data-bs-toggle="" aria-expanded="false">
-                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="cast"></span></span><span class="nav-link-text">Dashboard</span></div>
+                  <a class="nav-link" href="<?=site_url('Main/dashboard_personal')?>" role="button" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="cast"></span></span><span class="nav-link-text">Dashboard Pribadi</span></div>
                   </a>
 
                   <a class="nav-link" href="<?=site_url('Main/absensi_pribadi')?>" role="button" data-bs-toggle="" aria-expanded="false">
@@ -322,29 +322,40 @@
                 <?php } ?>
 
                 <?php if($this->session->userdata('leader') == 1){ ?>
-                  <a class="nav-link" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+
+                  <a class="nav-link" href="<?=site_url('Main/dashboard_anggota')?>" role="button" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="cast"></span></span><span class="nav-link-text">Dashboard Anggota</span></div>
+                  </a>
+
+                  <a class="nav-link" href="<?=site_url('Main/absensi_anggota')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="columns"></span></span><span class="nav-link-text">Absensi Anggota</span></div>
                   </a>
 
-                  <a class="nav-link" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                  <a class="nav-link" href="<?=site_url('Main/pengajuan_anggota')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Pengajuan Anggota</span></div>
                   </a>
+                  
                 <?php } ?>
 
                 <?php if($this->session->userdata('jabatan_grup') == 2){ ?>
-                  <a class="nav-link" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+
+                  <a class="nav-link" href="<?=site_url('Main/dashboard_karyawan')?>" role="button" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="cast"></span></span><span class="nav-link-text">Dashboard Karyawan</span></div>
+                  </a>
+
+                  <a class="nav-link" href="<?=site_url('Main/absensi_karyawan')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="columns"></span></span><span class="nav-link-text">Absensi Karyawan</span></div>
                   </a>
 
-                  <a class="nav-link" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                  <a class="nav-link" href="<?=site_url('Main/pengajuan_karyawan')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Pengajuan Karyawan</span></div>
                   </a>
 
-                  <a class="nav-link" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                  <a class="nav-link" href="<?=site_url('Main/monitoring_absensi')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Monitoring Absensi</span></div>
                   </a>
 
-                  <a class="nav-link" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                  <a class="nav-link" href="<?=site_url('Main/pengaturan_absensi')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Pengaturan Absensi</span></div>
                   </a>
                 <?php } ?>

@@ -95,7 +95,7 @@ class Pengajuan extends CI_Controller {
 
         // Response dalam bentuk json
         $rsp['status'] = $q[0];
-        $rsp['msg'] = $q[1];
+        $rsp['msg'] = "Berhasil mengimkan pengajuan";
 
         echo json_encode($rsp);
     }
@@ -154,6 +154,13 @@ class Pengajuan extends CI_Controller {
                 ]
             );
             if ($terima_act_pengajuan) {
+                //Mengambil detail pengajuan
+                $pengajuan = $this->mp->getPengajuan(['p.id' => $pengajuan_id]);
+                $pengajuan = $pengajuan->num_rows() > 0 ? $pengajuan->row() : false;
+
+                //Tambahkan ke absensi
+                $this->ma->setIzin($pengajuan->karyawan_id,$pengajuan->status_pengajuan,$pengajuan->id);
+
                 $data_log = [
                     'pengajuan_id' => $pengajuan_id,
                     'msg' => $ket,
@@ -167,11 +174,8 @@ class Pengajuan extends CI_Controller {
                 ];
                 $this->mp->inLogPengajuan($data_log);
 
-                //  Mengambil detail pengajuan
-                 $pengajuan = $this->mp->getPengajuan(['p.id' => $pengajuan_id]);
-                 $pengajuan = $pengajuan->num_rows() > 0 ? $pengajuan->row() : false;
 
-                 // Menerjemahkan kode status_pengajuan agar dapat dibaca
+                // Menerjemahkan kode status_pengajuan agar dapat dibaca
                 $v_status_pengajuan = $this->mketabsen->getKetAbsensi($pengajuan->status_pengajuan);
 
                 // Mengambil link dinamis menyesuikan dengan status_pengajuan
@@ -232,6 +236,13 @@ class Pengajuan extends CI_Controller {
 
         echo json_encode($rsp);
 
+    }
+
+    // Anggota
+
+    public function dt_pengajuan_anggota()
+    {
+        echo $this->mp->dt_pengajuan_anggota();
     }
 
 }

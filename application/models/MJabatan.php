@@ -10,6 +10,17 @@ class MJabatan extends CI_Model {
         //Do your magic here
     }
 
+    public function getMyAnggotaJabatan($karyawan_id='')
+    {
+        $parent_id = $this->aut_mk->getKaryawan($karyawan_id);
+        if ($parent_id->num_rows() > 0) {
+            $parent_id = $parent_id->row()->tbl_jabatan_id;
+        }
+
+        $q = $this->db->get_where($this->t, ['parent_id' => $parent_id]);
+        return $q;
+    }
+
     public function getJabatan($jabatan_grp_id="")
     {
         $this->db->select('*');
