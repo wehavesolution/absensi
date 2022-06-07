@@ -61,11 +61,11 @@
                     
                 </div>
                 <div class="card-footer">
-                    <?php if($this->session->userdata('id') != $data->karyawan_id && $data->diterima == "0") { ?>
+                    <?php if(($this->session->userdata('id') == @$leader_id || $this->session->userdata('jabatan_grup') == 2 || $this->session->userdata('jabatan_grup') == 3) && $data->diterima == "0") { ?>
                         <?php if(($this->session->userdata('id') != $data->karyawan_id)) { ?>
                             <button type="submit" class="btn btn-primary" onclick="tindaklanjuti(1)">Terima</button>
                         <?php } ?>
-                        <?php if(($this->session->userdata('id') != $data->karyawan_id)) { ?>
+                        <?php if($this->session->userdata('id') != $data->karyawan_id) { ?>
                         <button type="button" class="btn btn-secondary" onclick="tindaklanjuti(2)">Tolak</button>
                         <?php } ?>
                     <?php }else if($this->session->userdata('id') == $data->karyawan_id && $data->diterima == "0") { ?>

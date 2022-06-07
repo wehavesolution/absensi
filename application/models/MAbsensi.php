@@ -14,19 +14,27 @@ class MAbsensi extends CI_Model {
     // Get Absen Month
     public function getAbsenMonth($year="",$kode_ket=null,$karyawan_id=null,$leader=false)
     {
+
+        //  Definisi inputan filter
+        $i_karyawan = $this->input->post('i_karyawan');
+        $i_jabatan = $this->input->post('i_jabatan');
+        $i_status_absensi = $this->input->post('i_status_absensi');
+        $i_date_start = $this->input->post('i_date_start');
+        $i_date_end = $this->input->post('i_date_end');
+
         if ($leader) {
             $parent_id = $this->aut_mk->getKaryawan($karyawan_id);
             if ($parent_id->num_rows() > 0) {
                 $parent_id = $parent_id->row()->tbl_jabatan_id;
             }
 
-            $this->db->join('tbl_karyawan k', 'k.id = x.karyawan_id', 'inner');
-            $this->db->join('tbl_jabatan j', 'j.id = k.tbl_jabatan_id', 'inner');
+          
             
             $this->db->where('j.parent_id',$parent_id);
-        }else{
-           
         }
+
+        $this->db->join('tbl_karyawan k', 'k.id = x.karyawan_id', 'inner');
+        $this->db->join('tbl_jabatan j', 'j.id = k.tbl_jabatan_id', 'inner');
 
         $this->db->where('YEAR(x.ctddate) = '.$year);
 
@@ -37,6 +45,33 @@ class MAbsensi extends CI_Model {
         if (@$kode_ket) {
             $this->db->where('x.kode_ket', $kode_ket);
         }
+
+        //  Filter berdasarkan nama karyawan
+        if ($i_karyawan) {
+            $this->db->where('x.karyawan_id', $i_karyawan);
+        }
+
+        //  Filter berdasarkan jabatan
+        if ($i_jabatan) {
+            $this->db->where('k.tbl_jabatan_id', $i_jabatan);
+        }
+
+        //  Filter berdasarkan status
+        if ($i_status_absensi) {
+            $this->db->where('x.status_absensi',$i_status_absensi);
+        }
+
+         //  Filter berdasarkan tanggal start
+         if ($i_date_start) {
+            $this->db->where('x.ctddate >=',$i_date_start);
+        }
+
+        //  Filter berdasarkan tanggal start
+        if ($i_date_end) {
+            $this->db->where('x.ctddate <=',$i_date_end);
+        }
+        
+
         $this->db->select('count(*) as jml, month(x.ctddate) as bulan');
         $q = $this->db->get($this->t.' x');
         return $q;
@@ -405,32 +440,41 @@ class MAbsensi extends CI_Model {
     }
 
     // Modal untuk menambahkan data izin absen karyawan ke database
-    public function setIzin($karyawan_id='',$status_izin='',$pengajuan_id='',$date='')
+    public function setIzin($karyawan_id='',$status_izin='',$pengajuan_id='',$date_start='',$date_end='')
     {
-        $date = ($date == '') ? date('Y-m-d') : $date = $date;
-
         if($this->getPengaturanAktif()[0]) {
             $pengaturan_id = $this->getPengaturanAktif()[1];
         }else{
             return [false, "Admin belum mengatur penetapan absensi, mohon hubungi Admin!"];
         }
 
-        if ($karyawan_id && $status_izin && $pengajuan_id && $date) {
-            $q = $this->inAbsensi([
-                'status_absensi' => $status_izin,
-                'kode_ket' => $status_izin,
-                'karyawan_id' => $karyawan_id,
-                'tbl_pengajuan_id' => $pengajuan_id,
-                'pengaturan_id' => $pengaturan_id,
-                'aktif' => 1,
-                'tanggal' => $date,
-            ]);
+        if ($karyawan_id && $status_izin && $pengajuan_id && $date_start) {
+
+            //Tambahkan ke absensi
+            $begin = new DateTime($date_start);
+            $end = new DateTime($date_end);
+            $end->add(new DateInterval('P1D'));
+
+            $interval = DateInterval::createFromDateString('+1 day');
+            $period = new DatePeriod($begin, $interval, $end);
+
+            foreach ($period as $dt) {
+                $q = $this->inAbsensi([
+                    'status_absensi' => $status_izin,
+                    'kode_ket' => $status_izin,
+                    'karyawan_id' => $karyawan_id,
+                    'tbl_pengajuan_id' => $pengajuan_id,
+                    'pengaturan_id' => $pengaturan_id,
+                    'aktif' => 1,
+                    'tanggal' => $dt->format("Y-m-d"),
+                ]);
+            }
             if ($q[0]) {
                 $ket = $this->input->post('keterangan');
                 $this->mp->inLogPengajuan([
                     'pengajuan_id' => $pengajuan_id,
                     'msg' => $ket,
-                    'ctdby' => $this->session->userdata('id'),
+                    'ctdby' => $karyawan_id,
                     'accept' =>'0',
                     'acceptNote' => $ket
                 ]);
@@ -533,6 +577,8 @@ class MAbsensi extends CI_Model {
         $i_jabatan = $this->input->post('i_jabatan');
         $i_status_absensi = $this->input->post('i_status_absensi');
         $i_date = $this->input->post('i_ctddate');
+        $i_date_start = $this->input->post('i_date_start');
+        $i_date_end = $this->input->post('i_date_end');
         
          $CI = &get_instance();
          $CI->load->model('DataTable', 'dt');
@@ -575,6 +621,18 @@ class MAbsensi extends CI_Model {
         //  Filter berdasarkan tanggal
         if ($i_date) {
             $con = ['where','ta.ctddate',$i_date];
+            array_push($condition,$con);
+        }
+
+         //  Filter berdasarkan tanggal start
+         if ($i_date_start) {
+            $con = ['where','ta.ctddate >=',$i_date_start];
+            array_push($condition,$con);
+        }
+
+         //  Filter berdasarkan tanggal end
+        if ($i_date_end) {
+            $con = ['where','ta.ctddate <=',$i_date_end];
             array_push($condition,$con);
         }
 

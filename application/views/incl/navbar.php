@@ -107,11 +107,11 @@
                       </ul> -->
                     </div>
                     <div class="card-footer p-0 border-top">
-                      <ul class="nav d-flex flex-column my-3">
+                      <!-- <ul class="nav d-flex flex-column my-3">
                         <li class="nav-item"><a class="nav-link px-3" href="#!"><span class="me-2 text-900" data-feather="user"></span>Profile</a></li>
-                      </ul>
-                      <hr>
-                      <div class="px-3"><a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="<?=site_url('Login/auth_logout')?>"><span class="me-2" data-feather="log-out"></span>Sign out</a></div>
+                      </ul> -->
+                      <!-- <hr> -->
+                      <div class="px-3 pt-3"><a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="<?=site_url('Login/auth_logout')?>"><span class="me-2" data-feather="log-out"></span>Sign out</a></div>
                       <div class="my-2 text-center fw-bold fs--2 text-600"><a class="text-600 me-1" href="#!">Copyright</a>&bull;<a class="text-600 ms-1" href="#!">2022</a></div>
                     </div>
                   </div>

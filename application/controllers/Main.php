@@ -90,6 +90,38 @@ class Main extends CI_Controller {
 		$this->load->view('_main',$data);
 	}
 
+	public function rekap_absensi()
+	{
+		
+		$this->load->model('MJabatan','mj');
+		
+		$data = [
+			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
+			'title' => "ERM :: Rekap Absensi",
+			'sub_title' => "Karyawan",
+			'page' => "rekap/absensi",
+			'data' => [
+				'total' => $this->ma->getTotal([]),
+				'tepat_waktu' => $this->ma->getTotal(['kode_ket' => 'TW']),
+				'telat' => $this->ma->getTotal(['kode_ket' => 'TLT']),
+				'cuti' => $this->ma->getTotal(['kode_ket' => 'CTI']),
+			],
+			'filter' => [
+				'f_karyawan' => $this->aut_mk->getKaryawan()->result(),
+				'f_jabatan' => $this->mj->getJabatan()->result()
+			],
+			'link_api' => [
+				['dt','../Api/absensi/dt_absensi_karyawan'],
+				['grafik_perbulan','../Api/absensi/getChartRekapAbsenBulanKaryawan'],
+				['grafik_pertahun','../Api/absensi/getChartAbsenTahunKaryawan'],
+			],
+			'js' => [
+				'assets/js/rekap_absensi.js'
+			]
+		];
+		$this->load->view('_main',$data);
+	}
+
 	public function absensi_pribadi()
 	{
 		$data = [
@@ -124,14 +156,18 @@ class Main extends CI_Controller {
 
 	public function detail_pengajuan()
 	{
+		$leader_id = "";
 		$id = $this->input->get('id');
-
-
+		$leader = $this->mk->getLeaderKaryawan($this->karyawan_id);
+		if ($leader) {
+			$leader_id = $leader->num_rows() > 0 ? $leader->row()->id : null;
+		}
 		$data = [
 			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
 			'title' => "ERM :: Detail Pengajuan",
 			'page' => "pengajuan/detail",
 			'data' => $this->mp->getIDPengajuan($id),
+			'leader_id' => $leader_id,
 			'log_data' => $this->mp->getLogPengajuanID($id),
 			'js' => [
 				'assets/js/pengajuan_detail.js'

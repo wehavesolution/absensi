@@ -161,8 +161,9 @@ class MPengajuan extends CI_Model {
                  $dt->ctdtime,
                  $dt->nama,
                  $dt->keterangan,
-                 $dt->status_pengajuan_str,
+                //  $dt->status_pengajuan_str,
                  $this->setTerimaPengajuan($dt->diterima),
+                 'safas',
                  '<a href="'.site_url('Main/detail_pengajuan?id='.$dt->id).'" clsss="btn btn-sm btn-primary">Detail</a>'
              );
          }
@@ -182,11 +183,9 @@ class MPengajuan extends CI_Model {
     {
         if ($terima==0) {
             return "Belum di proses";
-        }else if ($terima==1) {
-            return "Sedang di proses";
-        }else if($terima==2){
+        }else if($terima==1){
             return "Pengajuan di Setujui";
-        }else if($terima==3){
+        }else if($terima==2){
             return "Pengajuan di Tolak";
         }
     }

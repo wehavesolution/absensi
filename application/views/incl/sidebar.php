@@ -337,7 +337,7 @@
                   
                 <?php } ?>
 
-                <?php if($this->session->userdata('jabatan_grup') == 2){ ?>
+                <?php if($this->session->userdata('jabatan_grup') == 2 || $this->session->userdata('jabatan_grup') == 3){ ?>
 
                   <a class="nav-link" href="<?=site_url('Main/dashboard_karyawan')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="cast"></span></span><span class="nav-link-text">Dashboard Karyawan</span></div>
@@ -349,6 +349,10 @@
 
                   <a class="nav-link" href="<?=site_url('Main/pengajuan_karyawan')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Pengajuan Karyawan</span></div>
+                  </a>
+
+                  <a class="nav-link" href="<?=site_url('Main/rekap_absensi')?>" role="button" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Rekap Absensi</span></div>
                   </a>
 
                   <a class="nav-link" href="<?=site_url('Main/monitoring_absensi')?>" role="button" data-bs-toggle="" aria-expanded="false">

@@ -1,5 +1,7 @@
 let a;
 let time;
+const hostname = "http://localhost/absensi/";
+
 function addZero(i) {
     if (i < 10) {i = "0" + i}
     return i;
@@ -35,7 +37,7 @@ function setAbsenMasuk(e) {
         if (result.isConfirmed) {
             $.ajax({
                 type: "POST",
-                url: "../Api/Absensi/setAbsenMasuk",
+                url: hostname+"Api/Absensi/setAbsenMasuk",
                 data: {
                     img : $('#result > img').attr('src')
                 },
@@ -103,7 +105,7 @@ function setAbsenPulang(e) {
             if (result.isConfirmed) {
                 $.ajax({
                     type: "POST",
-                    url: "../Api/Absensi/setAbsenPulang",
+                    url: hostname+"Api/Absensi/setAbsenPulang",
                     data: {
                         img : $('#result > img').attr('src')
                     },
@@ -227,7 +229,7 @@ function kirimPengajuan() {
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "../Api/Pengajuan/kirimPengajuan",
+            url: hostname+"Api/Pengajuan/kirimPengajuan",
             data: $(this).serialize(),
             dataType: "json",
             beforeSend: function (r) { 
@@ -260,13 +262,10 @@ function kirimPengajuan() {
 
 // Datatable
 
-function dt_global(dom="#table",link="", data={}, column=[]) {
+function dt_global(dom="#table",link="", data={}, column=[], exports=false) {
     $(dom).DataTable({
        dom: 'Bfrtip',
-        buttons: [
-            'excel'
-       ],
-
+       buttons:  exports ? ['copy', 'csv', 'excel', 'pdf', 'print'] : [],
         // Processing indicator
         "bAutoWidth": false,
         "destroy": true,

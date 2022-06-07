@@ -13,7 +13,9 @@ function dt() {
         [{
             "targets": [0,1],
             "orderable": false
-        }]);
+        }],
+        exports = true
+        );
 }
   
 

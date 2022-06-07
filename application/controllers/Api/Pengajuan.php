@@ -14,6 +14,7 @@ class Pengajuan extends CI_Controller {
         $this->load->model('MPengajuan','mp');
         $this->load->model('MNotif','mn');
         $this->load->model('MKaryawan','mk');
+        $this->load->model('MAbsensi','ma');
         $this->load->model('MKetAbsensi','mketabsen');
 	}
 
@@ -66,22 +67,26 @@ class Pengajuan extends CI_Controller {
         if ($q[0] && $karyawan) {
             // Ambil id karyawan hrd
             $hrd = $this->mk->getHRDKaryawan();
-            $hrd_id = $hrd->num_rows() > 0 ? $hrd->row()->id : null;
-            if ($hrd_id) {
-                // Kirim notifikasi ke hrd
-                $dari           = $karyawan_id;
-                $kepada         = $hrd_id;
-                $msg            = $karyawan->nama.' telah mengirimkan pengajuan izin '.$keterangan_status_pengajuan;
-                $action_id      = $q[2];
-                $link           = $_link.$action_id;
-                $kode_action    = $status_pengajuan;
-                $this->mn->kirimNotif($dari,$kepada,$msg,$action_id,$link,$kode_action);
+            if ($hrd) {
+                $hrd_id = $hrd->num_rows() > 0 ? $hrd->row()->id : null;
+                if ($hrd_id != $this->session->userdata('id')) {
+                    // Kirim notifikasi ke hrd
+                    $dari           = $karyawan_id;
+                    $kepada         = $hrd_id;
+                    $msg            = $karyawan->nama.' telah mengirimkan pengajuan izin '.$keterangan_status_pengajuan;
+                    $action_id      = $q[2];
+                    $link           = $_link.$action_id;
+                    $kode_action    = $status_pengajuan;
+                    $this->mn->kirimNotif($dari,$kepada,$msg,$action_id,$link,$kode_action);
+                }
+
             }
 
             // Ambil id karyawan leader
             $leader = $this->mk->getLeaderKaryawan($karyawan_id);
-            $leader_id = $leader->num_rows() > 0 ? $leader->row()->id : null;
-            if ($leader_id) {
+            if ($leader) {
+                $leader_id = $leader->num_rows() > 0 ? $leader->row()->id : null;
+                if ($leader_id != $this->session->userdata('id')) {
                 // Kirim notifikasi ke leader
                 $dari           = $karyawan_id;
                 $kepada         = $leader_id;
@@ -90,6 +95,7 @@ class Pengajuan extends CI_Controller {
                 $link           = $_link.$action_id;
                 $kode_action    = $status_pengajuan;
                 $this->mn->kirimNotif($dari,$kepada,$msg,$action_id,$link,$kode_action);
+                }
             }
         }
 
@@ -154,12 +160,14 @@ class Pengajuan extends CI_Controller {
                 ]
             );
             if ($terima_act_pengajuan) {
+                
                 //Mengambil detail pengajuan
                 $pengajuan = $this->mp->getPengajuan(['p.id' => $pengajuan_id]);
                 $pengajuan = $pengajuan->num_rows() > 0 ? $pengajuan->row() : false;
-
-                //Tambahkan ke absensi
-                $this->ma->setIzin($pengajuan->karyawan_id,$pengajuan->status_pengajuan,$pengajuan->id);
+                
+                if ($accept == "1") {
+                    $this->ma->setIzin($pengajuan->karyawan_id,$pengajuan->status_pengajuan,$pengajuan->id,$pengajuan->tgl_mulai,$pengajuan->tgl_akhir);
+                }
 
                 $data_log = [
                     'pengajuan_id' => $pengajuan_id,

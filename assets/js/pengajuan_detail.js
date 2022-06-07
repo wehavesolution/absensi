@@ -38,6 +38,10 @@ function tindaklanjuti(accept=null) {
                             'error'
                         );
                     }
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2300);
                 }
             });
         }
