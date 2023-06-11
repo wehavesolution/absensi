@@ -16,7 +16,9 @@ setInterval(() => {
 
 $(document).ready(function () {
     closeModal();
+    pilih_pengajuan('CTI')
     kirimPengajuan();
+    get_jml_cuti();
 });
 
 function setAbsenMasuk(e) {
@@ -226,38 +228,40 @@ function closeModal() {
 
 function kirimPengajuan() {
     $('#form_pengajuan').submit(function (e) { 
-        e.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: hostname+"Api/Pengajuan/kirimPengajuan",
-            data: $(this).serialize(),
-            dataType: "json",
-            beforeSend: function (r) { 
-
-            },
-            success: function (r) {
-                if (r.status) {
-                    Swal.fire(
-                        'Berhasil',
-                        r.msg,
-                        'success'
-                    );
-
-                    $('#modal_pengajuan').modal('hide');
-                }else{
-                    Swal.fire(
-                        'Gagal',
-                        r.msg,
-                        'error'
-                    );
+            e.preventDefault();
+        if(!cek_jatah_cuti()){
+            $.ajax({
+                type: "POST",
+                url: hostname+"Api/Pengajuan/kirimPengajuan",
+                data: $(this).serialize(),
+                dataType: "json",
+                beforeSend: function (r) { 
+    
+                },
+                success: function (r) {
+                    if (r.status) {
+                        Swal.fire(
+                            'Berhasil',
+                            r.msg,
+                            'success'
+                        );
+    
+                        $('#modal_pengajuan').modal('hide');
+                    }else{
+                        Swal.fire(
+                            'Gagal',
+                            r.msg,
+                            'error'
+                        );
+                    }
+                },error : function (r) { 
+                    console.log('error : ',r)
+                },complete : function (r) { 
+                    console.log('Complete : ', r)
                 }
-            },error : function (r) { 
-                console.log('error : ',r)
-            },complete : function (r) { 
-                console.log('Complete : ', r)
-            }
-        });
-    });
+            });
+        }
+    });    
 }
 
 // Datatable
@@ -294,4 +298,47 @@ function dt_global(dom="#table",link="", data={}, column=[], exports=false) {
         "columnDefs": column
     });
     
+  }
+
+  function pilih_pengajuan(params='') {
+    if(params == "CTI"){
+        $('#div_jumlah_hari').show();
+    }else{
+        $('#div_jumlah_hari').hide();
+    }
+  }
+
+  function get_jml_cuti() {
+    $.ajax({
+        type: "POST",
+        url: hostname+"Api/CutiKaryawan/self_jml_cuti_karyawan",
+        dataType: "json",
+        success: function (r) {
+            if (r.status) {
+             $('#info_jml_cuti').html(`<div class="alert alert-soft-primary" role="alert">
+             Jatah cuti anda saat ini :<b> ${r.data}</b><input type="hidden" id="jml_jatah_cuti" value="${r.data}">
+           </div>`);
+            }
+        },error : function (r) { 
+            console.log('error : ',r)
+        },complete : function (r) { 
+            console.log('Complete : ', r)
+        }
+    });
+  }
+
+  function cek_jatah_cuti() {
+    let result = false;
+    if(parseInt($('#jumlah_hari').val()) > parseInt($('#jml_jatah_cuti').val()) && $('#status_pengajuan').val() == "CTI"){
+        Swal.fire(
+            'Gagal',
+            `Jumlah hari cuti melebihi batas, jatah cuti anda saat ini ${$('#jml_jatah_cuti').val()} `,
+            'error'
+        );
+
+        result = true;
+    }
+
+
+    return result;
   }

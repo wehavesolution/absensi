@@ -81,11 +81,13 @@ height: 24px;
                     <form action="javascript:void(0);" id="form-filter" method="post">
                       <div class="d-flex gap-2" style="align-items: baseline;">
                       <select name="tahun" class="form-select form-select-sm mt-2">
-                          <?php
-                            for ($i=0; $i < 10; $i++) { 
-                              echo "<option value='".date('Y')+$i."'>".date('Y')+$i."</option>";
+                          <?php for ($i=2022; $i < date('Y')+10 ; $i++) { 
+                            if($i == date('Y')){
+                              echo "<option selected value='$i'>$i</option>";
+                            }else{
+                              echo "<option value='$i'>$i</option>";
                             }
-                          ?>
+                          } ?>
                       </select>
                       <button type="submit"  style="height: fit-content;">Filter</button>
                           </div>

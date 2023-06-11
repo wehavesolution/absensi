@@ -37,6 +37,7 @@ class Pengajuan extends CI_Controller {
         $tgl_mulai = $this->input->post('tgl_mulai');
         $tgl_akhir = $this->input->post('tgl_akhir');
         $keterangan = $this->input->post('keterangan');
+        $jumlah_hari = $this->input->post('jumlah_hari');
         $status_pengajuan = $this->input->post('status_pengajuan');
         
 
@@ -45,6 +46,7 @@ class Pengajuan extends CI_Controller {
             'tgl_mulai' => $tgl_mulai,
             'tgl_akhir' => $tgl_akhir,
             'keterangan' => $keterangan,
+            'jumlah_hari' => $jumlah_hari,
             'status_pengajuan' => $status_pengajuan
         ];
         

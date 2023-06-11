@@ -64,22 +64,29 @@
         <form action="javascript:void(0);" id="form_pengajuan">
         <div class="modal-body">
           <div class="row">
+            <div class="col-md-12 mb-3" id="info_jml_cuti">
+
+            </div>
             <div class="col-md-12 mb-3">
               <label for="pilih_pengajuan">Pilih Pengajuan</label>
-              <select name="status_pengajuan" id="status_pengajuan" class="form-control form-control-sm">
+              <select name="status_pengajuan" id="status_pengajuan" class="form-control form-control-sm" onchange="pilih_pengajuan(this.value)">
                 <option value="CTI">Cuti</option>
                 <option value="SKT">Sakit</option>
                 <option value="PJLDNS">Perjalanan Dinas</option>
                 <option value="LMB">Lembur</option>
               </select>
             </div>
+            <div class="col-md-12 mb-2" id="div_jumlah_hari" style="display:none;">
+              <label for="tgl_mulai">Jumlah Hari Cuti</label>
+              <input type="number" min="1" name="jumlah_hari" class="form-control form-control-sm" id="jumlah_hari">
+            </div>
             <div class="col-md-6">
               <label for="tgl_mulai">Tanggal Mulai</label>
-              <input type="date" name="tgl_mulai" class="form-control form-control-sm" id="tgl_mulai">
+              <input type="date" name="tgl_mulai" class="form-control form-control-sm" id="tgl_mulai" >
             </div>
             <div class="col-md-6">
               <label for="tgl_selesai">Tanggal Berakhir</label>
-              <input type="date" name="tgl_akhir" class="form-control form-control-sm" id="tgl_akhir">
+              <input type="date" name="tgl_akhir" class="form-control form-control-sm" id="tgl_akhir" >
             </div>
             <div class="col-md-12 mt-2">
               <label for="keterangan">Keterangan</label>
