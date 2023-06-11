@@ -329,7 +329,24 @@ function dt_global(dom="#table",link="", data={}, column=[], exports=false) {
 
   function cek_jatah_cuti() {
     let result = false;
-    if(parseInt($('#jumlah_hari').val()) > parseInt($('#jml_jatah_cuti').val()) && $('#status_pengajuan').val() == "CTI"){
+    debugger;
+    if($('#jml_jatah_cuti').val() == 0){
+        Swal.fire(
+            'Gagal',
+            `Jatah cuti anda sudah habis`,
+            'error'
+        );
+
+        result = true;
+    }else if(($('#jumlah_hari').val() == 0 || $('#jumlah_hari').val() == '') && $('#status_pengajuan').val() == "CTI"){
+        Swal.fire(
+            'Gagal',
+            `Jumlah hari cuti harus di isi`,
+            'error'
+        );
+
+        result = true;
+    }else if(parseInt($('#jumlah_hari').val()) > parseInt($('#jml_jatah_cuti').val()) && $('#status_pengajuan').val() == "CTI"){
         Swal.fire(
             'Gagal',
             `Jumlah hari cuti melebihi batas, jatah cuti anda saat ini ${$('#jml_jatah_cuti').val()} `,

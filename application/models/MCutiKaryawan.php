@@ -73,4 +73,15 @@ class MCutiKaryawan extends CI_Model {
         return [false, null];
     }
 
+    public function kalkulasi_cuti_karyawan($karyawan_id=null,$pengurangan=null){
+        $get = $this->getIDCutiKaryawan($karyawan_id);
+        if($get && $pengurangan <= $get->jumlah){
+           return $this->upCutiKarywan(['jumlah' => $get->jumlah - $pengurangan],['id' => $get->id]);
+        }else{
+            return [false, "Jumlah pengajuan cuti melebihi batas jatah cuti yang ada, jumlah hari cuti yang di ajukan ".$pengurangan.", jatah cuti saat ini ".$get->jumlah];
+        }
+
+        return [false, null];
+    }
+
 }

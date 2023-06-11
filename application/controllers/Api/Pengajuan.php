@@ -16,6 +16,7 @@ class Pengajuan extends CI_Controller {
         $this->load->model('MKaryawan','mk');
         $this->load->model('MAbsensi','ma');
         $this->load->model('MKetAbsensi','mketabsen');
+        $this->load->model('MCutiKaryawan','mck');
 	}
 
     // Aksi untuk melakukan pengajuan
@@ -153,7 +154,60 @@ class Pengajuan extends CI_Controller {
             'diterima' =>  $accept
         ]);
 
+        //Mengambil detail pengajuan
+        $pengajuan = $this->mp->getPengajuan(['p.id' => $pengajuan_id]);
+        $pengajuan = $pengajuan->num_rows() > 0 ? $pengajuan->row() : false;
+
         if ($terima_pengajuan) {
+
+             // Kalkulasi jatah cuti karyawan
+             if($pengajuan->status_pengajuan == "CTI" && $accept == "1"){
+                $res = $this->mck->kalkulasi_cuti_karyawan($pengajuan->karyawan_id,$pengajuan->jumlah_hari);
+
+                if (!$res[0] && $res[1]) {
+                   
+                    $terima_act_pengajuan = $this->mp->inActPengajuan(
+                        [
+                            'pengajuan_id' => $pengajuan_id,
+                            'approve_id' => $this->session->userdata('id'),
+                            'status_action' =>  2 //tolak
+                        ]
+                    );
+
+                    
+                    $data_log = [
+                        'pengajuan_id' => $pengajuan_id,
+                        'msg' => $ket,
+                        'ctdby' => $this->session->userdata('id'),
+                        'accept' => 2,
+                        'acceptBy' => $accpetBy,
+                        'acceptNum' => $acceptNum,
+                        'acceptNote' => $ket,
+                        'ctddate' => date('Y-m-d'),
+                        'ctdtime' => date('H:i:s'),
+                    ];
+                    $this->mp->inLogPengajuan($data_log);
+
+                    $rsp['status'] = false;
+                    $rsp['msg'] = $res[1];
+                    echo json_encode($rsp);
+                    die;
+                }
+            }
+
+            $data_log = [
+                'pengajuan_id' => $pengajuan_id,
+                'msg' => $ket,
+                'ctdby' => $this->session->userdata('id'),
+                'accept' => $accept,
+                'acceptBy' => $accpetBy,
+                'acceptNum' => $acceptNum,
+                'acceptNote' => $ket,
+                'ctddate' => date('Y-m-d'),
+                'ctdtime' => date('H:i:s'),
+            ];
+            $this->mp->inLogPengajuan($data_log);
+
             $terima_act_pengajuan = $this->mp->inActPengajuan(
                 [
                     'pengajuan_id' => $pengajuan_id,
@@ -161,29 +215,12 @@ class Pengajuan extends CI_Controller {
                     'status_action' =>  $accept
                 ]
             );
+
             if ($terima_act_pengajuan) {
-                
-                //Mengambil detail pengajuan
-                $pengajuan = $this->mp->getPengajuan(['p.id' => $pengajuan_id]);
-                $pengajuan = $pengajuan->num_rows() > 0 ? $pengajuan->row() : false;
-                
+
                 if ($accept == "1") {
                     $this->ma->setIzin($pengajuan->karyawan_id,$pengajuan->status_pengajuan,$pengajuan->id,$pengajuan->tgl_mulai,$pengajuan->tgl_akhir);
                 }
-
-                $data_log = [
-                    'pengajuan_id' => $pengajuan_id,
-                    'msg' => $ket,
-                    'ctdby' => $this->session->userdata('id'),
-                    'accept' => $accept,
-                    'acceptBy' => $accpetBy,
-                    'acceptNum' => $acceptNum,
-                    'acceptNote' => $ket,
-                    'ctddate' => date('Y-m-d'),
-                    'ctdtime' => date('H:i:s'),
-                ];
-                $this->mp->inLogPengajuan($data_log);
-
 
                 // Menerjemahkan kode status_pengajuan agar dapat dibaca
                 $v_status_pengajuan = $this->mketabsen->getKetAbsensi($pengajuan->status_pengajuan);

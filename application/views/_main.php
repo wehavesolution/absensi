@@ -55,7 +55,7 @@
     </div>
     </div>
 
-    <div class="modal fade" id="modal_pengajuan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_pengajuan" onclick="get_jml_cuti()" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
