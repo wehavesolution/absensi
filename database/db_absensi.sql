@@ -138,7 +138,7 @@ CREATE TABLE `tbl_karyawan` (
   `tgl_lahir` date DEFAULT NULL,
   `aktif` enum('1','0') DEFAULT '1',
   `users_id` int(11) NOT NULL,
-  `tbl_jabatan_id` int(11) DEFAULT NULL,
+  `jabatan_id` int(11) DEFAULT NULL,
   `img` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -146,7 +146,7 @@ CREATE TABLE `tbl_karyawan` (
 -- Dumping data untuk tabel `tbl_karyawan`
 --
 
-INSERT INTO `tbl_karyawan` (`id`, `nip`, `email`, `nama`, `tempat_tinggal`, `jk`, `tgl_masuk`, `status_karyawan`, `no_telp`, `tgl_lahir`, `aktif`, `users_id`, `tbl_jabatan_id`, `img`) VALUES
+INSERT INTO `tbl_karyawan` (`id`, `nip`, `email`, `nama`, `tempat_tinggal`, `jk`, `tgl_masuk`, `status_karyawan`, `no_telp`, `tgl_lahir`, `aktif`, `users_id`, `jabatan_id`, `img`) VALUES
 (1, '01', 'sahrulrizal22@gmail.com', 'Sahrul Rizal', 'Cianjur', '1', '2019-12-03', '2', '08976288123', '1997-08-22', '1', 1, 2, '58.png'),
 (2, '02', 'mellinasudirman@gmail.com', 'Mellina Sudirman', 'Medan', '1', '2019-01-01', '2', '08976288123', '1997-08-22', '1', 2, 1, '23.png'),
 (3, '03', 'devitaaulia@gmail.com', 'Devita Aulia', 'Depok', '1', '2015-01-01', '2', '08976288123', '1997-08-22', '1', 3, 3, '8.png');
@@ -517,7 +517,7 @@ ALTER TABLE `tbl_jabatan_grup`
 ALTER TABLE `tbl_karyawan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_karyawan_users1_idx` (`users_id`),
-  ADD KEY `fk_karyawan_tbl_jabatan1_idx` (`tbl_jabatan_id`);
+  ADD KEY `fk_karyawan_tbl_jabatan1_idx` (`jabatan_id`);
 
 --
 -- Indeks untuk tabel `tbl_ket_absensi`
@@ -665,7 +665,7 @@ ALTER TABLE `tbl_absensi`
 -- Ketidakleluasaan untuk tabel `tbl_karyawan`
 --
 ALTER TABLE `tbl_karyawan`
-  ADD CONSTRAINT `fk_karyawan_tbl_jabatan1` FOREIGN KEY (`tbl_jabatan_id`) REFERENCES `tbl_jabatan` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_karyawan_tbl_jabatan1` FOREIGN KEY (`jabatan_id`) REFERENCES `tbl_jabatan` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_karyawan_users1` FOREIGN KEY (`users_id`) REFERENCES `tbl_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --

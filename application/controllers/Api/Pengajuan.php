@@ -142,7 +142,7 @@ class Pengajuan extends CI_Controller {
         
         $kar = $this->aut_mk->getKaryawan($this->session->userdata('id'));
         if ($kar->num_rows() > 0) {
-            $acceptNum = $kar->row()->tbl_jabatan_id == "3" ? '2' : null;
+            $acceptNum = $kar->row()->jabatan_id == "3" ? '2' : null;
         }
 
         $lead = $this->aut_mk->getLeaderKaryawan($ctdby);

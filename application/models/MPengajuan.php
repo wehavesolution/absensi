@@ -358,12 +358,12 @@ class MPengajuan extends CI_Model {
          $con = ['join','tbl_ket_absensi ka','ka.kode_ket = ta.status_pengajuan','inner'];
          array_push($condition,$con);
 
-         $con = ['join','tbl_jabatan tj','tj.id = k.tbl_jabatan_id','inner'];
+         $con = ['join','tbl_jabatan tj','tj.id = k.jabatan_id','inner'];
          array_push($condition,$con);
 
         $q = $this->aut_mk->getKaryawan($this->session->userdata('id'));
         if ($q->num_rows() > 0) {
-            $parent_id = $q->row()->tbl_jabatan_id;
+            $parent_id = $q->row()->jabatan_id;
 
             $con = ['where','tj.parent_id',$parent_id];
             array_push($condition,$con);

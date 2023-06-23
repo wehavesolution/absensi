@@ -275,4 +275,44 @@ class Main extends CI_Controller {
 		];
 		$this->load->view('_main',$data);
 	}
+
+	// Administrator
+	public function users()
+	{
+		$data = [
+			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
+			'title' => "ERM :: Users",
+			'page' => "admin/users",
+			'js' => [
+				'assets/js/users.js'
+			]
+		];
+		$this->load->view('_main',$data);
+	}
+
+	public function jabatan()
+	{
+		$data = [
+			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
+			'title' => "ERM :: Jabatan",
+			'page' => "admin/jabatan",
+			'js' => [
+				'assets/js/jabatan.js'
+			]
+		];
+		$this->load->view('_main',$data);
+	}
+
+	public function grup_jabatan()
+	{
+		$data = [
+			'info_absensi' => $this->ma->cek_absen($this->karyawan_id),
+			'title' => "ERM :: Jabatan Grup",
+			'page' => "admin/jabatan_grup",
+			'js' => [
+				'assets/js/grup_jabatan.js'
+			]
+		];
+		$this->load->view('_main',$data);
+	}
 }

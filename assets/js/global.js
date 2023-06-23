@@ -225,7 +225,6 @@ function closeModal() {
  }
 
 //  Pengajuan
-
 function kirimPengajuan() {
     $('#form_pengajuan').submit(function (e) { 
             e.preventDefault();
@@ -329,8 +328,7 @@ function dt_global(dom="#table",link="", data={}, column=[], exports=false) {
 
   function cek_jatah_cuti() {
     let result = false;
-    debugger;
-    if($('#jml_jatah_cuti').val() == 0){
+    if($('#jml_jatah_cuti').val() == 0 && $('#status_pengajuan').val() == "CTI"){
         Swal.fire(
             'Gagal',
             `Jatah cuti anda sudah habis`,
@@ -358,4 +356,31 @@ function dt_global(dom="#table",link="", data={}, column=[], exports=false) {
 
 
     return result;
+  }
+
+  
+  function select(obj=null) {
+    if (obj) {
+        $.ajax({
+            type: "POST",
+            url: hostname+obj.path,
+            data: $(this).serialize(),
+            dataType: "json",
+            success: function (r) {
+                if (r.status) {
+                    let html = '';
+                    r.data.forEach(e => {
+                        html = `<option value="${e[obj.key]}">${e[obj.value]}</option>`;
+                        $(obj.id_dom).append(html);
+                    });
+                }
+            },error : function (r) { 
+                console.log('error : ',r)
+            },complete : function (r) { 
+                console.log('Complete : ', r)
+            }
+        });  
+    }else{
+        console.log('Obj select cannot be null')
+    }
   }

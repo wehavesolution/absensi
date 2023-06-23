@@ -42,8 +42,6 @@ class MCutiKaryawan extends CI_Model {
 
     public function inCutiKaryawan($obj='')
     {
-        $obj['ctddate'] = date('Y-m-d');
-        $obj['ctdtime'] = date('H:i:s');
         $this->db->insert($this->t, $obj);
         if ($this->db->affected_rows() > 0) {
             return [true, $this->db->insert_id()];

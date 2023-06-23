@@ -317,7 +317,7 @@
                   </ul> -->
                 </li>
                 <li class="nav-item">
-                <?php if($this->session->userdata('leader') == 1 ||  $this->session->userdata('jabatan_grup') == 2){ ?>
+                <?php if($this->session->userdata('leader') == 1 ||  $this->session->userdata('jabatan_grup') == 2 ||  $this->session->userdata('jabatan_grup') == 4){ ?>
                   <p class="navbar-vertical-label">Modul</p>
                 <?php } ?>
 
@@ -361,6 +361,22 @@
 
                   <a class="nav-link" href="<?=site_url('Main/pengaturan_absensi')?>" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Pengaturan Absensi</span></div>
+                  </a>
+                <?php } ?>
+
+                <?php if($this->session->userdata('jabatan_grup') == 4 || $this->session->userdata('jabatan_grup') == 2){ ?>
+                  <a class="nav-link" href="<?=site_url('Main/users')?>" role="button" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Users</span></div>
+                  </a>
+                <?php } ?>
+
+                <?php if($this->session->userdata('jabatan_grup') == 4){ ?>
+                  <a class="nav-link" href="<?=site_url('Main/jabatan')?>" role="button" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Jabatan</span></div>
+                  </a>
+
+                  <a class="nav-link" href="<?=site_url('Main/grup_jabatan')?>" role="button" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text">Grup Jabatan</span></div>
                   </a>
                 <?php } ?>
                   

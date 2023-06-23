@@ -25,7 +25,7 @@ class MAbsensi extends CI_Model {
         if ($leader) {
             $parent_id = $this->aut_mk->getKaryawan($karyawan_id);
             if ($parent_id->num_rows() > 0) {
-                $parent_id = $parent_id->row()->tbl_jabatan_id;
+                $parent_id = $parent_id->row()->jabatan_id;
             }
 
           
@@ -34,7 +34,7 @@ class MAbsensi extends CI_Model {
         }
 
         $this->db->join('tbl_karyawan k', 'k.id = x.karyawan_id', 'inner');
-        $this->db->join('tbl_jabatan j', 'j.id = k.tbl_jabatan_id', 'inner');
+        $this->db->join('tbl_jabatan j', 'j.id = k.jabatan_id', 'inner');
 
         $this->db->where('YEAR(x.ctddate) = '.$year);
 
@@ -53,7 +53,7 @@ class MAbsensi extends CI_Model {
 
         //  Filter berdasarkan jabatan
         if ($i_jabatan) {
-            $this->db->where('k.tbl_jabatan_id', $i_jabatan);
+            $this->db->where('k.jabatan_id', $i_jabatan);
         }
 
         //  Filter berdasarkan status
@@ -83,11 +83,11 @@ class MAbsensi extends CI_Model {
         if ($leader) {
             $parent_id = $this->aut_mk->getKaryawan($karyawan_id);
             if ($parent_id->num_rows() > 0) {
-                $parent_id = $parent_id->row()->tbl_jabatan_id;
+                $parent_id = $parent_id->row()->jabatan_id;
             }
 
             $this->db->join('tbl_karyawan k', 'k.id = x.karyawan_id', 'inner');
-            $this->db->join('tbl_jabatan j', 'j.id = k.tbl_jabatan_id', 'inner');
+            $this->db->join('tbl_jabatan j', 'j.id = k.jabatan_id', 'inner');
             
             $this->db->where('j.parent_id',$parent_id);
         }else{
@@ -608,7 +608,7 @@ class MAbsensi extends CI_Model {
 
         //  Filter berdasarkan jabatan
         if ($i_jabatan) {
-            $con = ['where','k.tbl_jabatan_id',$i_jabatan];
+            $con = ['where','k.jabatan_id',$i_jabatan];
             array_push($condition,$con);
         }
 
@@ -759,12 +759,12 @@ class MAbsensi extends CI_Model {
          $con = ['join','tbl_ket_absensi ka','ka.kode_ket = ta.kode_ket','inner'];
          array_push($condition,$con);
         
-         $con = ['join','tbl_jabatan tj','tj.id = k.tbl_jabatan_id','inner'];
+         $con = ['join','tbl_jabatan tj','tj.id = k.jabatan_id','inner'];
          array_push($condition,$con);
         
         $q = $this->aut_mk->getKaryawan($this->session->userdata('id'));
         if ($q->num_rows() > 0) {
-            $parent_id = $q->row()->tbl_jabatan_id;
+            $parent_id = $q->row()->jabatan_id;
 
             $con = ['where','tj.parent_id',$parent_id];
             array_push($condition,$con);
@@ -786,7 +786,7 @@ class MAbsensi extends CI_Model {
 
         //  Filter berdasarkan jabatan
         if ($i_jabatan) {
-            $con = ['where','k.tbl_jabatan_id',$i_jabatan];
+            $con = ['where','k.jabatan_id',$i_jabatan];
             array_push($condition,$con);
         }
 
